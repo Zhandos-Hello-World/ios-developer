@@ -1,19 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>BaseFile</key>
-	<string>Chapters/Chapter1.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
-	<key>Diffs</key>
-	<array>
-		<dict>
-			<key>ModifiedContent</key>
-			<string>//1
+//1
 print("1----------------")
 for i in 1...100{
     var value = true
-    if (i &gt; 2) {
-        for j in 2..&lt;i {
+    if (i > 2) {
+        for j in 2..<i {
             if i % j == 0 {
                 value = false
                 break
@@ -27,13 +17,13 @@ for i in 1...100{
 print("2)------------------")
 var array = [0, 6, 2, 0, 0, 4, 5, 3, 3, 6, 0, 7, 9, 4, 5, 0, 5, 7, 0, 0]
 var i = 0, j = array.count - 1
-while i &lt; j {
+while i < j {
     var temp = array[i]
     array[i] = array[j]
     array[j] = temp
     i += 1
     j -= 1
-} 
+}
 print(array)
 
 
@@ -43,7 +33,7 @@ array = [0, 6, 2, 0, 0, 4, 5, 3, 3, 6, 0, 7, 9, 4, 5, 0, 5, 7, 0, 0]
     //Firstly, I found index which is not contain zero
 i = 0
 var num = 0
-while num &lt; array.count {
+while num < array.count {
     if (array[num] != 0) {
         i = num
         break
@@ -52,7 +42,7 @@ while num &lt; array.count {
 }
 //Secondly, My j will be find zero and if it found zero, then my array[i] will be exchange with my array[j].
 j = i
-while j &lt; array.count {
+while j < array.count {
     if (array[j] == 0) {
         var temp = array[j]
         array[j] = array[i]
@@ -85,8 +75,8 @@ var check = true
 while check {
     check = false
     var i = 1, j = 0
-    while (i &lt; keys.count){
-        if values[j] &lt; values[i] {
+    while (i < keys.count){
+        if values[j] < values[i] {
             var temp = keys[i]
             keys[i] = keys[j]
             keys[j] = temp
@@ -102,27 +92,8 @@ while check {
     }
 }
 i = 0
-while i &lt; keys.count {
+while i < keys.count {
     print("\(keys[i]) встречается \(values[i]) раз")
     i += 1
 }
 
-
-
-
-
-
-
-</string>
-			<key>ModifiedRange</key>
-			<string>{0, 2009}</string>
-			<key>OriginalContent</key>
-			<string></string>
-			<key>OriginalRange</key>
-			<string>{0, 0}</string>
-		</dict>
-	</array>
-	<key>FormatVersion</key>
-	<integer>2</integer>
-</dict>
-</plist>
