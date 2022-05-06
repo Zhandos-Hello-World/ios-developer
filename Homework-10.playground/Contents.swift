@@ -2,7 +2,9 @@ import UIKit
 
 import SwiftUI
 
-struct Animal { let name: String }
+struct Animal {
+    let name: String
+}
 class Formatter {}
 
 class Document {
@@ -85,5 +87,37 @@ protocol Machine {
     func sendFax(document: Document)
 }
 
-class NewIphone {}
-class FaxMachine {}
+class NewIphone: Machine {
+    var pdf: PDF? = nil
+    
+    init(pdf: PDF) {
+        self.pdf = pdf
+    }
+    
+    func convert(document: Document) -> PDF? {
+        return pdf
+    }
+    func convert(document: Document) -> Image? {
+        return Image(String(describing: pdf?.document.url))
+    }
+    func sendFax(document: Document) {
+        
+    }
+}
+class FaxMachine: Machine {
+    var pdf: PDF? = nil
+    
+    init(pdf: PDF) {
+        self.pdf = pdf
+    }
+    
+    func convert(document: Document) -> PDF? {
+        return pdf
+    }
+    func convert(document: Document) -> Image? {
+        return Image(String(describing: pdf?.document.url))
+    }
+    func sendFax(document: Document) {
+        
+    }
+}
