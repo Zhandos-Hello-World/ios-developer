@@ -8,6 +8,8 @@
 import UIKit
 
 final class StockViewController: UIViewController {
+    private let model = ModelItem.getINSTANCE()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -49,13 +51,24 @@ extension StockViewController: UITableViewDelegate {
 extension StockViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return model.items.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: StockCell.typeName, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: StockCell.typeName, for: indexPath) as! StockCell        
+        
+        let item = model.items[indexPath.row]
+        
+        cell.iconView.image = UIImage(named: item.image)
+        cell.symbolLabel.text = item.symbol
+        cell.nameLabel.text = item.name
+        cell.changedLabel.text = item.changed
+        cell.priceLabel.text = item.price
+        
+        //indexPath.row % 2 == 0
+        if indexPath.row % 2 == 0 {
+            cell.contentView.backgroundColor = UIColor(red: 0.94, green: 0.96, blue: 0.97, alpha: 1.0)
+        }
         return cell
     }
-    
-    
 }

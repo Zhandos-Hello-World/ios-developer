@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		31A62530283E06DE0004C44B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A6252F283E06DE0004C44B /* Item.swift */; };
+		31A62532283E07630004C44B /* ModelItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A62531283E07630004C44B /* ModelItem.swift */; };
 		31EA033A283CD8BC00B75DD8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EA0339283CD8BC00B75DD8 /* AppDelegate.swift */; };
 		31EA033E283CD8BC00B75DD8 /* StockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EA033D283CD8BC00B75DD8 /* StockViewController.swift */; };
 		31EA0343283CD8BD00B75DD8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31EA0342283CD8BD00B75DD8 /* Assets.xcassets */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		31A6252F283E06DE0004C44B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		31A62531283E07630004C44B /* ModelItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelItem.swift; sourceTree = "<group>"; };
 		31EA0336283CD8BC00B75DD8 /* CurrencyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31EA0339283CD8BC00B75DD8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		31EA033D283CD8BC00B75DD8 /* StockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewController.swift; sourceTree = "<group>"; };
@@ -85,6 +89,15 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		31A6252E283E06CD0004C44B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				31A6252F283E06DE0004C44B /* Item.swift */,
+				31A62531283E07630004C44B /* ModelItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		31EA032D283CD8BC00B75DD8 = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +117,7 @@
 		31EA0338283CD8BC00B75DD8 /* CurrencyApp */ = {
 			isa = PBXGroup;
 			children = (
+				31A6252E283E06CD0004C44B /* Model */,
 				31A6252B283DE5B20004C44B /* Screens */,
 				31A6252A283DE4670004C44B /* Resources */,
 				31A62529283DE45A0004C44B /* Presentation */,
@@ -182,7 +196,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31A62530283E06DE0004C44B /* Item.swift in Sources */,
 				31EA033E283CD8BC00B75DD8 /* StockViewController.swift in Sources */,
+				31A62532283E07630004C44B /* ModelItem.swift in Sources */,
 				31EA033A283CD8BC00B75DD8 /* AppDelegate.swift in Sources */,
 				31EA034E283CE29E00B75DD8 /* StockCell.swift in Sources */,
 			);

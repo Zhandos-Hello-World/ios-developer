@@ -10,23 +10,51 @@ import UIKit
 final class StockCell: UITableViewCell {
     static let typeName = "STOCKCELLID"
     
-    
     //MARK: Views
-    private var iconView: UIImageView = {
+    lazy var iconView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "yandex")
         image.contentMode = .scaleAspectFit
         image.translatesAutoresizingMaskIntoConstraints = false
         image.layer.cornerRadius = 12
         image.clipsToBounds = true
         return image
     }()
-    private var symbolLabel: UILabel = {
+    lazy var symbolLabel: UILabel = {
         let label = UILabel()
-        label.text = "YNDX"
         label.font = .systemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    lazy var priceLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    lazy var changedLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .green
+        //#24B25D
+        label.textColor = UIColor(red: 0.14, green: 0.70, blue: 0.36, alpha: 1.00)
+        return label
+    }()
+    lazy var starButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "Path"), for: UIControl.State.normal)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    lazy var customView: UIView = {
+        let view = UIView()
+        return view
     }()
     
     //MARK: init
@@ -42,8 +70,16 @@ final class StockCell: UITableViewCell {
     func setupView() {
         contentView.addSubview(iconView)
         contentView.addSubview(symbolLabel)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(priceLabel)
+        contentView.addSubview(changedLabel)
+        contentView.addSubview(starButton)
+        contentView.layer.cornerRadius = 16
+
         setupConstraints()
     }
+
+    
     func setupConstraints() {
         NSLayoutConstraint.activate([
             iconView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
@@ -55,6 +91,21 @@ final class StockCell: UITableViewCell {
             symbolLabel.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 12),
             symbolLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 14),
             
+            nameLabel.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 12),
+            nameLabel.topAnchor.constraint(equalTo: symbolLabel.bottomAnchor),
+            
+            priceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -17),
+            priceLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 14),
+            
+            changedLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor),
+            changedLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+    
+            starButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17),
+            starButton.leadingAnchor.constraint(equalTo: symbolLabel.trailingAnchor, constant: 6),
+            starButton.widthAnchor.constraint(equalToConstant: 16),
+            starButton.heightAnchor.constraint(equalToConstant: 16),
+            
+            contentView.heightAnchor.constraint(equalToConstant: 68)
         ])
     }
 }
