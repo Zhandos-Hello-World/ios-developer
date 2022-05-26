@@ -8,7 +8,11 @@
 import UIKit
 
 final class StockCell: UITableViewCell {
-    static let typeName = "STOCKCELLID"
+    
+    static let typeName = "\(StockCell.self)"
+    
+    
+    static let colorSecondary = UIColor(red: 0.94, green: 0.96, blue: 0.97, alpha: 1.0)
     
     //MARK: Views
     lazy var iconView: UIImageView = {
@@ -19,39 +23,45 @@ final class StockCell: UITableViewCell {
         image.clipsToBounds = true
         return image
     }()
+    
     lazy var symbolLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18)
+        label.font = .systemFont(ofSize: 18, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12)
+        label.font = .systemFont(ofSize: 12, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     lazy var priceLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18)
+        label.font = .systemFont(ofSize: 18, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     lazy var changedLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12)
+        label.font = .systemFont(ofSize: 12, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .green
         //#24B25D
         label.textColor = UIColor(red: 0.14, green: 0.70, blue: 0.36, alpha: 1.00)
         return label
     }()
+    
     lazy var starButton: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(named: "Path"), for: UIControl.State.normal)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
+    
     lazy var customView: UIView = {
         let view = UIView()
         return view
@@ -107,5 +117,20 @@ final class StockCell: UITableViewCell {
             
             contentView.heightAnchor.constraint(equalToConstant: 68)
         ])
+    }
+    
+    //MARK: logic methods
+    func configure(with model: ModelStockItem, index: Int) {
+        let item = model.items[index]
+        
+        iconView.image = UIImage(named: item.image)
+        symbolLabel.text = item.symbol
+        nameLabel.text = item.name
+        changedLabel.text = item.changed
+        priceLabel.text = item.price
+        
+        if index % 2 == 0 {
+            contentView.backgroundColor = StockCell.colorSecondary
+        }
     }
 }
