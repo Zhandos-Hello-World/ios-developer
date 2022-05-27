@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		316E428A283F98760045A093 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316E4289283F98760045A093 /* Router.swift */; };
 		31A62530283E06DE0004C44B /* StockItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A6252F283E06DE0004C44B /* StockItem.swift */; };
 		31A62532283E07630004C44B /* ModelStockItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A62531283E07630004C44B /* ModelStockItem.swift */; };
+		31D60BB028406DA300ABCB4D /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D60BAF28406DA300ABCB4D /* NetworkError.swift */; };
+		31D60BB228406E3B00ABCB4D /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D60BB128406E3B00ABCB4D /* HTTPMethod.swift */; };
+		31D60BB42840722200ABCB4D /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D60BB32840722200ABCB4D /* NetworkService.swift */; };
+		31D60BB72840776C00ABCB4D /* StocksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D60BB62840776C00ABCB4D /* StocksService.swift */; };
 		31EA033A283CD8BC00B75DD8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EA0339283CD8BC00B75DD8 /* AppDelegate.swift */; };
 		31EA033E283CD8BC00B75DD8 /* StockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EA033D283CD8BC00B75DD8 /* StockViewController.swift */; };
 		31EA0343283CD8BD00B75DD8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31EA0342283CD8BD00B75DD8 /* Assets.xcassets */; };
@@ -17,8 +22,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		316E4289283F98760045A093 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		31A6252F283E06DE0004C44B /* StockItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockItem.swift; sourceTree = "<group>"; };
 		31A62531283E07630004C44B /* ModelStockItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelStockItem.swift; sourceTree = "<group>"; };
+		31D60BAF28406DA300ABCB4D /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		31D60BB128406E3B00ABCB4D /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		31D60BB32840722200ABCB4D /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		31D60BB62840776C00ABCB4D /* StocksService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksService.swift; sourceTree = "<group>"; };
 		31EA0336283CD8BC00B75DD8 /* CurrencyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31EA0339283CD8BC00B75DD8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		31EA033D283CD8BC00B75DD8 /* StockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewController.swift; sourceTree = "<group>"; };
@@ -39,6 +49,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		316E4284283F95CC0045A093 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		316E4285283F96A70045A093 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		316E4286283F970E0045A093 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				31EA034D283CE29E00B75DD8 /* StockCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		316E4287283F972C0045A093 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				316E4288283F97480045A093 /* NetworkService */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		316E4288283F97480045A093 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				316E4289283F98760045A093 /* Router.swift */,
+				31D60BAF28406DA300ABCB4D /* NetworkError.swift */,
+				31D60BB128406E3B00ABCB4D /* HTTPMethod.swift */,
+				31D60BB32840722200ABCB4D /* NetworkService.swift */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
 		31A62527283DE43C0004C44B /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -47,14 +98,6 @@
 				31EA0339283CD8BC00B75DD8 /* AppDelegate.swift */,
 			);
 			path = Application;
-			sourceTree = "<group>";
-		};
-		31A62529283DE45A0004C44B /* Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				31EA034D283CE29E00B75DD8 /* StockCell.swift */,
-			);
-			path = Presentation;
 			sourceTree = "<group>";
 		};
 		31A6252A283DE4670004C44B /* Resources */ = {
@@ -68,25 +111,30 @@
 		31A6252B283DE5B20004C44B /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				31A6252C283DE5BC0004C44B /* Stocks */,
+				316E4287283F972C0045A093 /* Services */,
+				31A6252C283DE5BC0004C44B /* StockScreen */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
 		};
-		31A6252C283DE5BC0004C44B /* Stocks */ = {
+		31A6252C283DE5BC0004C44B /* StockScreen */ = {
 			isa = PBXGroup;
 			children = (
-				31A6252D283DE5DD0004C44B /* Controller */,
+				31D60BB52840775200ABCB4D /* Service */,
+				316E4285283F96A70045A093 /* Presenter */,
+				316E4284283F95CC0045A093 /* Model */,
+				31A6252D283DE5DD0004C44B /* View */,
 			);
-			path = Stocks;
+			path = StockScreen;
 			sourceTree = "<group>";
 		};
-		31A6252D283DE5DD0004C44B /* Controller */ = {
+		31A6252D283DE5DD0004C44B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				316E4286283F970E0045A093 /* Cell */,
 				31EA033D283CD8BC00B75DD8 /* StockViewController.swift */,
 			);
-			path = Controller;
+			path = View;
 			sourceTree = "<group>";
 		};
 		31A6252E283E06CD0004C44B /* Model */ = {
@@ -96,6 +144,14 @@
 				31A62531283E07630004C44B /* ModelStockItem.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		31D60BB52840775200ABCB4D /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				31D60BB62840776C00ABCB4D /* StocksService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		31EA032D283CD8BC00B75DD8 = {
@@ -120,7 +176,6 @@
 				31A6252E283E06CD0004C44B /* Model */,
 				31A6252B283DE5B20004C44B /* Screens */,
 				31A6252A283DE4670004C44B /* Resources */,
-				31A62529283DE45A0004C44B /* Presentation */,
 				31A62527283DE43C0004C44B /* Application */,
 			);
 			path = CurrencyApp;
@@ -197,9 +252,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				31A62530283E06DE0004C44B /* StockItem.swift in Sources */,
+				31D60BB028406DA300ABCB4D /* NetworkError.swift in Sources */,
+				31D60BB72840776C00ABCB4D /* StocksService.swift in Sources */,
 				31EA033E283CD8BC00B75DD8 /* StockViewController.swift in Sources */,
 				31A62532283E07630004C44B /* ModelStockItem.swift in Sources */,
+				31D60BB42840722200ABCB4D /* NetworkService.swift in Sources */,
+				31D60BB228406E3B00ABCB4D /* HTTPMethod.swift in Sources */,
 				31EA033A283CD8BC00B75DD8 /* AppDelegate.swift in Sources */,
+				316E428A283F98760045A093 /* Router.swift in Sources */,
 				31EA034E283CE29E00B75DD8 /* StockCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

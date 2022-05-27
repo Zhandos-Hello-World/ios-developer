@@ -7,20 +7,20 @@
 
 import Foundation
 
-final class StockItem {
-    var image: String = ""
-    var symbol: String = ""
-    var name: String = ""
-    var price: String = ""
-    var changed: String = ""
-    var favourite: Bool = false
+struct StockItem: Decodable  {
+    let id: String
+    let symbol: String
+    let name: String
+    let image: String
+    let price: Double
+    let change: Double
+    let changePercentage: Double
     
-    init(image: String, symbol: String, name: String, price: String, changed: String) {
-        self.image = image
-        self.symbol = symbol
-        self.name = name
-        self.price = price
-        self.changed = changed
+    
+    enum CodingKeys: String, CodingKey {
+        case id, symbol, name, image
+        case price = "current_price"
+        case change = "price_change_24h"
+        case changePercentage = "price_change_percentage_24h"
     }
-    
 }

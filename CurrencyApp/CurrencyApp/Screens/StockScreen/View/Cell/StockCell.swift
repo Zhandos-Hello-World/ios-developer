@@ -17,6 +17,7 @@ final class StockCell: UITableViewCell {
     //MARK: Views
     lazy var iconView: UIImageView = {
         let image = UIImageView()
+        image.image = UIImage(named: "YNDX")
         image.contentMode = .scaleAspectFit
         image.translatesAutoresizingMaskIntoConstraints = false
         image.layer.cornerRadius = 12
@@ -120,14 +121,12 @@ final class StockCell: UITableViewCell {
     }
     
     //MARK: logic methods
-    func configure(with model: ModelStockItem, index: Int) {
-        let item = model.items[index]
-        
-        iconView.image = UIImage(named: item.image)
-        symbolLabel.text = item.symbol
-        nameLabel.text = item.name
-        changedLabel.text = item.changed
-        priceLabel.text = item.price
+    func configure(with stock: StockItem, index: Int) {
+        //iconView.image = UIImage(named: stock.image)
+        symbolLabel.text = stock.symbol
+        nameLabel.text = stock.name
+        changedLabel.text = "\(stock.change)"
+        priceLabel.text = "\(stock.price)"
         
         if index % 2 == 0 {
             contentView.backgroundColor = StockCell.colorSecondary
