@@ -1,13 +1,14 @@
 //
-//  StockViewController.swift
+//  FavouriteStockViewController.swift
 //  CurrencyApp
 //
-//  Created by Zhandos Baimurat on 24.05.2022.
+//  Created by Zhandos Baimurat on 27.05.2022.
 //
 
+import Foundation
 import UIKit
 
-final class StockViewController: UIViewController {
+class FavouriteViewController: UIViewController {
     private var stocks: [StockItem] = []
     
     private lazy var tableView: UITableView = {
@@ -17,7 +18,8 @@ final class StockViewController: UIViewController {
         tableView.separatorStyle = .none
         return tableView
     }()
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -64,18 +66,11 @@ final class StockViewController: UIViewController {
         ])
     }
 }
-extension StockViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detail = DetailViewController()
-        let nav = UINavigationController(rootViewController: detail)
-        nav.isToolbarHidden = false
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
-    }
-}
-extension StockViewController: UITableViewDataSource {
 
-    
+extension FavouriteViewController: UITableViewDelegate {
+}
+extension FavouriteViewController: UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return stocks.count
     }
@@ -89,30 +84,3 @@ extension StockViewController: UITableViewDataSource {
         return cell
     }
 }
-/*{"id":"bitcoin",
- "symbol":"btc",
- "name":"Bitcoin",
- "image":"https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
- "current_price":29239,
- "market_cap":558493923485,
- "market_cap_rank":1,
- "fully_diluted_valuation":615669476681,
- "total_volume":22748927281,
- "high_24h":29978,
- "low_24h":29258,
- "price_change_24h":-518.1531826007013,
- "price_change_percentage_24h":-1.74128,
- "market_cap_change_24h":-8804658413.779297,
- "market_cap_change_percentage_24h":-1.55203,
- "circulating_supply":19049787.0,
- "total_supply":21000000.0,
- "max_supply":21000000.0,
- "ath":69045,
- "ath_change_percentage":-57.08429,
- "ath_date":"2021-11-10T14:24:11.849Z",
- "atl":67.81,
- "atl_change_percentage":43597.82249,
- "atl_date":"2013-07-06T00:00:00.000Z",
- "roi":null,
- "last_updated":"2022-05-26T08:37:54.690Z"
-*/

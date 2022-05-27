@@ -9,11 +9,14 @@
 /* Begin PBXBuildFile section */
 		316E428A283F98760045A093 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316E4289283F98760045A093 /* Router.swift */; };
 		31A62530283E06DE0004C44B /* StockItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A6252F283E06DE0004C44B /* StockItem.swift */; };
-		31A62532283E07630004C44B /* ModelStockItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A62531283E07630004C44B /* ModelStockItem.swift */; };
 		31D60BB028406DA300ABCB4D /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D60BAF28406DA300ABCB4D /* NetworkError.swift */; };
 		31D60BB228406E3B00ABCB4D /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D60BB128406E3B00ABCB4D /* HTTPMethod.swift */; };
 		31D60BB42840722200ABCB4D /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D60BB32840722200ABCB4D /* NetworkService.swift */; };
 		31D60BB72840776C00ABCB4D /* StocksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D60BB62840776C00ABCB4D /* StocksService.swift */; };
+		31D60BBA284097DB00ABCB4D /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D60BB9284097DB00ABCB4D /* MainTabBarViewController.swift */; };
+		31D60BBD2840990100ABCB4D /* FavouriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D60BBC2840990100ABCB4D /* FavouriteViewController.swift */; };
+		31D60BC028409C9C00ABCB4D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D60BBF28409C9C00ABCB4D /* SearchViewController.swift */; };
+		31D60BC32840C33C00ABCB4D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D60BC22840C33C00ABCB4D /* DetailViewController.swift */; };
 		31EA033A283CD8BC00B75DD8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EA0339283CD8BC00B75DD8 /* AppDelegate.swift */; };
 		31EA033E283CD8BC00B75DD8 /* StockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EA033D283CD8BC00B75DD8 /* StockViewController.swift */; };
 		31EA0343283CD8BD00B75DD8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31EA0342283CD8BD00B75DD8 /* Assets.xcassets */; };
@@ -24,11 +27,14 @@
 /* Begin PBXFileReference section */
 		316E4289283F98760045A093 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		31A6252F283E06DE0004C44B /* StockItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockItem.swift; sourceTree = "<group>"; };
-		31A62531283E07630004C44B /* ModelStockItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelStockItem.swift; sourceTree = "<group>"; };
 		31D60BAF28406DA300ABCB4D /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		31D60BB128406E3B00ABCB4D /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		31D60BB32840722200ABCB4D /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		31D60BB62840776C00ABCB4D /* StocksService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksService.swift; sourceTree = "<group>"; };
+		31D60BB9284097DB00ABCB4D /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
+		31D60BBC2840990100ABCB4D /* FavouriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewController.swift; sourceTree = "<group>"; };
+		31D60BBF28409C9C00ABCB4D /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		31D60BC22840C33C00ABCB4D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		31EA0336283CD8BC00B75DD8 /* CurrencyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31EA0339283CD8BC00B75DD8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		31EA033D283CD8BC00B75DD8 /* StockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewController.swift; sourceTree = "<group>"; };
@@ -111,7 +117,10 @@
 		31A6252B283DE5B20004C44B /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				316E4287283F972C0045A093 /* Services */,
+				31D60BC12840C00700ABCB4D /* DetailScreen */,
+				31D60BBE28409C6600ABCB4D /* SearchScreen */,
+				31D60BBB284098E500ABCB4D /* FavouriteScreen */,
+				31D60BB8284097C300ABCB4D /* NavigationController */,
 				31A6252C283DE5BC0004C44B /* StockScreen */,
 			);
 			path = Screens;
@@ -141,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				31A6252F283E06DE0004C44B /* StockItem.swift */,
-				31A62531283E07630004C44B /* ModelStockItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -152,6 +160,38 @@
 				31D60BB62840776C00ABCB4D /* StocksService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		31D60BB8284097C300ABCB4D /* NavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				31D60BB9284097DB00ABCB4D /* MainTabBarViewController.swift */,
+			);
+			path = NavigationController;
+			sourceTree = "<group>";
+		};
+		31D60BBB284098E500ABCB4D /* FavouriteScreen */ = {
+			isa = PBXGroup;
+			children = (
+				31D60BBC2840990100ABCB4D /* FavouriteViewController.swift */,
+			);
+			path = FavouriteScreen;
+			sourceTree = "<group>";
+		};
+		31D60BBE28409C6600ABCB4D /* SearchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				31D60BBF28409C9C00ABCB4D /* SearchViewController.swift */,
+			);
+			path = SearchScreen;
+			sourceTree = "<group>";
+		};
+		31D60BC12840C00700ABCB4D /* DetailScreen */ = {
+			isa = PBXGroup;
+			children = (
+				31D60BC22840C33C00ABCB4D /* DetailViewController.swift */,
+			);
+			path = DetailScreen;
 			sourceTree = "<group>";
 		};
 		31EA032D283CD8BC00B75DD8 = {
@@ -173,6 +213,7 @@
 		31EA0338283CD8BC00B75DD8 /* CurrencyApp */ = {
 			isa = PBXGroup;
 			children = (
+				316E4287283F972C0045A093 /* Services */,
 				31A6252E283E06CD0004C44B /* Model */,
 				31A6252B283DE5B20004C44B /* Screens */,
 				31A6252A283DE4670004C44B /* Resources */,
@@ -251,11 +292,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31D60BC32840C33C00ABCB4D /* DetailViewController.swift in Sources */,
 				31A62530283E06DE0004C44B /* StockItem.swift in Sources */,
 				31D60BB028406DA300ABCB4D /* NetworkError.swift in Sources */,
 				31D60BB72840776C00ABCB4D /* StocksService.swift in Sources */,
+				31D60BBA284097DB00ABCB4D /* MainTabBarViewController.swift in Sources */,
 				31EA033E283CD8BC00B75DD8 /* StockViewController.swift in Sources */,
-				31A62532283E07630004C44B /* ModelStockItem.swift in Sources */,
+				31D60BBD2840990100ABCB4D /* FavouriteViewController.swift in Sources */,
+				31D60BC028409C9C00ABCB4D /* SearchViewController.swift in Sources */,
 				31D60BB42840722200ABCB4D /* NetworkService.swift in Sources */,
 				31D60BB228406E3B00ABCB4D /* HTTPMethod.swift in Sources */,
 				31EA033A283CD8BC00B75DD8 /* AppDelegate.swift in Sources */,

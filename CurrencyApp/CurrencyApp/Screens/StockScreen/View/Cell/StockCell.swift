@@ -125,8 +125,8 @@ final class StockCell: UITableViewCell {
         //iconView.image = UIImage(named: stock.image)
         symbolLabel.text = stock.symbol
         nameLabel.text = stock.name
-        changedLabel.text = "\(stock.change)"
-        priceLabel.text = "\(stock.price)"
+        changedLabel.text = stock.showChange()
+        priceLabel.text = "\(stock.getPrice())"
         
         if index % 2 == 0 {
             contentView.backgroundColor = StockCell.colorSecondary
