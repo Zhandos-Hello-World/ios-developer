@@ -13,13 +13,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let mainTabBar = MainTabBarViewController()
-        
+        //ModulBuilder.shared.tabbarController()
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = mainTabBar
+      
+        window?.rootViewController = getDetail()
 
         return true
+    }
+    
+    func getDetail() -> UIViewController {
+        let network = Network()
+        let service = DetailService(client: network)
+        let presenter = DetailPresenter(service: service)
+        let view = DetailViewController(presenter: presenter)
+        presenter.view = view
+        return view
     }
 
 }

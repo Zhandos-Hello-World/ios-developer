@@ -20,7 +20,7 @@ class MainTabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let stockViewController = StockViewController()
+        let stockViewController = ModulBuilder.shared.tabbarController()
         let favouriteViewController = FavouriteViewController()
         let searchViewController = SearchViewController()
         

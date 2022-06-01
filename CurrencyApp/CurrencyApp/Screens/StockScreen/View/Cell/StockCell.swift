@@ -121,12 +121,12 @@ final class StockCell: UITableViewCell {
     }
     
     //MARK: logic methods
-    func configure(with stock: StockItem, index: Int) {
+    func configure(with stock: StockItemModelProtocol, index: Int) {
         //iconView.image = UIImage(named: stock.image)
         symbolLabel.text = stock.symbol
         nameLabel.text = stock.name
-        changedLabel.text = stock.showChange()
-        priceLabel.text = "\(stock.getPrice())"
+        changedLabel.text = "$0.32(4,3%)"
+        priceLabel.text = stock.price
         
         if index % 2 == 0 {
             contentView.backgroundColor = StockCell.colorSecondary

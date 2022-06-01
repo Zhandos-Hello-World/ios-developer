@@ -9,13 +9,14 @@ import Foundation
 import UIKit
 
 class FavouriteViewController: UIViewController {
-    private var stocks: [StockItem] = []
+    private var stocks: [StockItemModelProtocol] = []
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(StockCell.self, forCellReuseIdentifier: StockCell.typeName)
         tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     
@@ -24,6 +25,9 @@ class FavouriteViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        title = "Favourite"
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
         setup()
         getStock()
     }
@@ -44,7 +48,7 @@ class FavouriteViewController: UIViewController {
         service.getStocks {[weak self] result in
             switch result {
             case .success(let stocks):
-                self?.stocks = stocks
+                self?.stocks = stocks.map { StockItemModel(stock: $0) }
                 self?.tableView.reloadData()
             case .failure(let error):
                 self?.showError(error.localizedDescription)

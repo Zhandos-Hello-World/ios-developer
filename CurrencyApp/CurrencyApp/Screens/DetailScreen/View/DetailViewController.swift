@@ -7,18 +7,21 @@
 
 import Foundation
 import UIKit
+import Charts
 
 class DetailViewController: UIViewController {
-    private lazy var toolbar: UIView = {
-        let toolbar = UIView()
+    private let presenter: DetailPresenterProtocol
+    
+    private lazy var toolbar: UIToolbar = {
+        let toolbar = UIToolbar()
         toolbar.translatesAutoresizingMaskIntoConstraints = false
-//        toolbar.layer.shadowColor = UIColor.black.cgColor
-//        toolbar.layer.shadowOpacity = 0.6
-//        toolbar.layer.shadowOffset = .zero
-//        toolbar.layer.shadowRadius = 10.0
-//
-//        toolbar.layer.shadowPath = UIBezierPath(rect: toolbar.bounds).cgPath
-//        toolbar.layer.shouldRasterize = true
+        toolbar.layer.shadowColor = UIColor.black.cgColor
+        toolbar.layer.shadowOpacity = 0.6
+        toolbar.layer.shadowOffset = .zero
+        toolbar.layer.shadowRadius = 10.0
+
+        toolbar.layer.shadowPath = UIBezierPath(rect: toolbar.bounds).cgPath
+        toolbar.layer.shouldRasterize = true
         
         return toolbar
     }()
@@ -59,7 +62,7 @@ class DetailViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 28, weight: .bold)
-        label.text = "$131.93"
+        label.text = " "
         return label
     }()
     
@@ -69,8 +72,8 @@ class DetailViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .green
         //#24B25D
-        label.text = "+$0.12 (1,15%)"
         label.textColor = UIColor(red: 0.14, green: 0.70, blue: 0.36, alpha: 1.00)
+        label.text = " "
         return label
     }()
     
@@ -78,8 +81,9 @@ class DetailViewController: UIViewController {
         
         let button = UIButton(configuration: selectedConfig)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Buy for $132.04", for: .normal)
-    
+        button.layer.cornerRadius = 16
+        button.clipsToBounds = true
+        button.setTitle(" ", for: .normal)
         return button
     }()
     
@@ -153,7 +157,41 @@ class DetailViewController: UIViewController {
         stack.spacing = 10
         return stack
     }()
+    private lazy var lineCharts: LineChartView = {
+        let chartView = LineChartView()
+        chartView.translatesAutoresizingMaskIntoConstraints = false
+        
+        chartView.xAxis.labelTextColor = .white
+        chartView.leftAxis.labelTextColor = .white
+        chartView.rightAxis.labelTextColor = .white
+        
+        
+        chartView.xAxis.drawAxisLineEnabled = false
+        chartView.leftAxis.drawAxisLineEnabled = false
+        chartView.xAxis.drawGridLinesEnabled = false
+        chartView.rightAxis.drawAxisLineEnabled = false
+
+        
+        chartView.animate(xAxisDuration: 1.0)
+        return chartView
+    }()
     
+    
+    
+    //MARK: init
+    init(presenter: DetailPresenterProtocol) {
+        self.presenter = presenter
+        
+        presenter.loadView(id: "bitcoin", currency: "usd")
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    //MARK: methods
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -167,10 +205,11 @@ class DetailViewController: UIViewController {
         toolbar.addSubview(leaveButton)
         toolbar.addSubview(titleLabel)
         toolbar.addSubview(subTitleLabel)
-        toolbar.addSubview(priceLabel)
-        toolbar.addSubview(changedLabel)
-        toolbar.addSubview(buyButton)
-        toolbar.addSubview(stack)
+        toolbar.addSubview(buyButton)        
+        
+        view.addSubview(priceLabel)
+        view.addSubview(changedLabel)
+        view.addSubview(lineCharts)
         
         
         [dayButton,
@@ -181,66 +220,94 @@ class DetailViewController: UIViewController {
          allButton].forEach {
             stack.addArrangedSubview($0)
         }
+        view.addSubview(stack)
         
     
         setupConstraints()
+        setData()
     }
-    
+    func setData() {
+        var entries: [ChartDataEntry] = []
+        for i in 0...30 {
+            entries.append(ChartDataEntry(x: Double(i), y: Double.random(in: 1...40)))
+        }
+        
+        let set = LineChartDataSet(entries: entries, label: "")
+        set.drawCirclesEnabled = false
+        set.mode = .cubicBezier
+        set.lineWidth = 4
+        set.setColor(.black)
+        set.fill = ColorFill(color: .black)
+        set.fillAlpha = 0.8
+        set.drawFilledEnabled = true
+        
+        let data = LineChartData(dataSet: set)
+        data.setDrawValues(false)
+        
+        
+        lineCharts.data = data
+    }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
             toolbar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             toolbar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             toolbar.topAnchor.constraint(equalTo: view.topAnchor),
-            toolbar.heightAnchor.constraint(equalToConstant: 120),
+            toolbar.heightAnchor.constraint(equalToConstant: 99),
             
-            favouriteButton.trailingAnchor.constraint(equalTo: toolbar.trailingAnchor, constant: -18),
-            favouriteButton.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: -28),
-            favouriteButton.heightAnchor.constraint(equalToConstant: 22),
-            favouriteButton.widthAnchor.constraint(equalToConstant: 22),
+            leaveButton.leadingAnchor.constraint(equalTo: toolbar.leadingAnchor, constant: 17),
+            leaveButton.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: -23),
             
+            favouriteButton.trailingAnchor.constraint(equalTo: toolbar.trailingAnchor, constant: -17),
+            favouriteButton.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: -23),
             
-
-            leaveButton.leadingAnchor.constraint(equalTo: toolbar.leadingAnchor, constant: 18),
-            leaveButton.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: -28),
-            leaveButton.widthAnchor.constraint(equalToConstant: 20),
-            leaveButton.heightAnchor.constraint(equalToConstant: 14),
-            
-            titleLabel.centerYAnchor.constraint(equalTo: toolbar.centerYAnchor),
             titleLabel.centerXAnchor.constraint(equalTo: toolbar.centerXAnchor),
+            titleLabel.topAnchor.constraint(equalTo: toolbar.topAnchor, constant: 42),
             
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             subTitleLabel.centerXAnchor.constraint(equalTo: toolbar.centerXAnchor),
+            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             
             priceLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             priceLabel.topAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: 63),
             
+            
             changedLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             changedLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 8),
-            
+        
             buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             buyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             buyButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
             
-            stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            stack.bottomAnchor.constraint(equalTo: buyButton.topAnchor, constant: -52)
+            stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            stack.bottomAnchor.constraint(equalTo: buyButton.topAnchor, constant: -52),
+            
+            lineCharts.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            lineCharts.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            lineCharts.bottomAnchor.constraint(equalTo: stack.topAnchor, constant: -40),
+            lineCharts.topAnchor.constraint(equalTo: changedLabel.bottomAnchor, constant: 30)
         ])
     }
-    
-    
 }
 
-extension UIView {
-    func dropShadow(scale: Bool = true) {
-      layer.masksToBounds = false
-      layer.shadowColor = UIColor.black.cgColor
-      layer.shadowOpacity = 0.5
-      layer.shadowOffset = CGSize(width: -10, height: 10)
-      layer.shadowRadius = 10
-
-      layer.shadowPath = UIBezierPath(rect: bounds).cgPath
-      layer.shouldRasterize = true
-      layer.rasterizationScale = scale ? UIScreen.main.scale : 10
+extension DetailViewController: DetailViewProtocol {
+    func updateView() {
+        let price = presenter.model().getValue(0)
+        let change = presenter.model().getValueChange(0)
+        
+        priceLabel.text = price
+        changedLabel.text = change
+        
+        buyButton.setTitle("Buy for \(price)", for: .normal)
     }
+    
+    func updateView(withLoader isLoading: Bool) {
+        
+    }
+    
+    func updateView(withError message: String) {
+        print("Not loaded")
+    }
+    
+    
 }

@@ -1,13 +1,14 @@
 //
-//  Item.swift
+//  Stock.swift
 //  CurrencyApp
 //
-//  Created by Zhandos Baimurat on 25.05.2022.
+//  Created by Zhandos Baimurat on 31.05.2022.
 //
 
 import Foundation
 
-struct StockItem: Decodable  {
+
+struct Stock: Decodable  {
     let id: String
     let symbol: String
     let name: String
@@ -64,18 +65,5 @@ struct StockItem: Decodable  {
         case price = "current_price"
         case change = "price_change_24h"
         case changePercentage = "price_change_percentage_24h"
-    }
-}
-extension String {
-    subscript (bounds: CountableClosedRange<Int>) -> String {
-        let start = index(startIndex, offsetBy: bounds.lowerBound)
-        let end = index(startIndex, offsetBy: bounds.upperBound)
-        return String(self[start...end])
-    }
-
-    subscript (bounds: CountableRange<Int>) -> String {
-        let start = index(startIndex, offsetBy: bounds.lowerBound)
-        let end = index(startIndex, offsetBy: bounds.upperBound)
-        return String(self[start..<end])
     }
 }

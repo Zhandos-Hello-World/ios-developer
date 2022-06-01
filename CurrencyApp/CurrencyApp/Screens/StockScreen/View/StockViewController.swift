@@ -8,52 +8,47 @@
 import UIKit
 
 final class StockViewController: UIViewController {
-    private var stocks: [StockItem] = []
+    private let presenter: StockPresenterProtocol
+    
+    
+    init(presenter: StockPresenterProtocol) {
+        self.presenter = presenter
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(StockCell.self, forCellReuseIdentifier: StockCell.typeName)
         tableView.separatorStyle = .none
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.showsVerticalScrollIndicator = false
+        tableView.backgroundColor = .white
         return tableView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         
+        presenter.loadView()
         setup()
-        getStock()
     }
+    
     func setup() {
-        tableView.dataSource = self
-        tableView.delegate = self
-        
-        
+        view.backgroundColor = .white
         view.addSubview(tableView)
-        tableView.backgroundColor = .white
         setupConstraints()
-    }
-    
-    func getStock() {
-        let client = Network()
-        let service: StockServiceProtocol = StockService(client: client)
         
-        service.getStocks {[weak self] result in
-            switch result {
-            case .success(let stocks):
-                self?.stocks = stocks
-                self?.tableView.reloadData()
-            case .failure(let error):
-                self?.showError(error.localizedDescription)
-            }
-        }
+        title = "Stocks"
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
-    
-    func showError(_ message: String) {
-        print(message)
-    }
-    
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
@@ -66,18 +61,36 @@ final class StockViewController: UIViewController {
 }
 extension StockViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detail = DetailViewController()
-        let nav = UINavigationController(rootViewController: detail)
-        nav.isToolbarHidden = false
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
+//        let detail = DetailViewController()
+//        let nav = UINavigationController(rootViewController: detail)
+//        nav.isToolbarHidden = false
+//        nav.modalPresentationStyle = .fullScreen
+//        present(nav, animated: true)
     }
 }
+extension StockViewController: StocksViewProtocol {
+    func updateView() {
+        tableView.reloadData()
+    }
+    
+    func updateView(withLoader isLoading: Bool) {
+        
+    }
+    
+    func updateView(withError message: String) {
+        
+    }
+    
+    
+}
+
+
+
 extension StockViewController: UITableViewDataSource {
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stocks.count
+        return presenter.itemsCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -85,7 +98,7 @@ extension StockViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        cell.configure(with: stocks[indexPath.row], index: indexPath.row)
+        cell.configure(with: presenter.model(for: indexPath), index: indexPath.row)
         return cell
     }
 }
