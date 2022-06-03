@@ -1,13 +1,12 @@
 //
-//  StockCell.swift
+//  FavouriteCell.swift
 //  CurrencyApp
 //
-//  Created by Zhandos Baimurat on 24.05.2022.
+//  Created by Zhandos Baimurat on 03.06.2022.
 //
-
 import UIKit
 
-final class StockCell: UITableViewCell {
+final class FavouriteCell: UITableViewCell {
     private var favouriteAction: (() -> Void)?
     static let typeName = "\(StockCell.self)"
     

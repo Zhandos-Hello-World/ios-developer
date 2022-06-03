@@ -17,18 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
       
-        window?.rootViewController = getDetail()
+        window?.rootViewController = ModulBuilder.shared.tabbarController()
 
         return true
-    }
-    
-    func getDetail() -> UIViewController {
-        let network = Network()
-        let service = DetailService(client: network)
-        let presenter = DetailPresenter(service: service)
-        let view = DetailViewController(presenter: presenter)
-        presenter.view = view
-        return view
     }
 
 }

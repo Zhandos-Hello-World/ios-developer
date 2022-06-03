@@ -61,11 +61,11 @@ final class StockViewController: UIViewController {
 }
 extension StockViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let detail = DetailViewController()
-//        let nav = UINavigationController(rootViewController: detail)
-//        nav.isToolbarHidden = false
-//        nav.modalPresentationStyle = .fullScreen
-//        present(nav, animated: true)
+        let detail = DetailModule().detailModule()
+        let nav = UINavigationController(rootViewController: detail)
+        nav.isToolbarHidden = false
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
     }
 }
 extension StockViewController: StocksViewProtocol {
@@ -83,8 +83,6 @@ extension StockViewController: StocksViewProtocol {
     
     
 }
-
-
 
 extension StockViewController: UITableViewDataSource {
 

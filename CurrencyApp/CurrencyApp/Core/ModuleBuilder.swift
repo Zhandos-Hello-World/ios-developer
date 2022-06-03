@@ -21,6 +21,8 @@ final class ModulBuilder {
         Network()
     }()
     
+    let favouriteService: FavouriteServiceProtocol = FavouriteLocalService() 
+    
     static let shared: ModulBuilder = .init()
     
     
@@ -40,7 +42,10 @@ final class ModulBuilder {
     }
     
     private func favouriteViewController() -> UIViewController {
-        FavouriteViewController()
+        let presenter = FavouritePresenter(service: stockService())
+        let view = FavouriteViewController(presenter: presenter)
+        presenter.view = view
+        return view
     }
     private func searchViewController() -> UIViewController {
         SearchViewController()

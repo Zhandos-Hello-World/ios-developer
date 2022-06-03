@@ -21,11 +21,10 @@ class MainTabBarViewController: UITabBarController {
         super.viewDidLoad()
         
         let stockViewController = ModulBuilder.shared.tabbarController()
-        let favouriteViewController = FavouriteViewController()
         let searchViewController = SearchViewController()
         
         
-        setViewControllers([stockViewController, favouriteViewController, searchViewController], animated: true)
+        setViewControllers([stockViewController, searchViewController], animated: true)
         
         guard let items = tabBar.items else {
             return

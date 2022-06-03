@@ -124,7 +124,7 @@ class DetailViewController: UIViewController {
     private lazy var monthButton: UIButton = {
         let button = UIButton(configuration: unSelectedConfig)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("D", for: .normal)
+        button.setTitle("M", for: .normal)
         return button
     }()
 
@@ -237,7 +237,7 @@ class DetailViewController: UIViewController {
         set.mode = .cubicBezier
         set.lineWidth = 4
         set.setColor(.black)
-        set.fill = ColorFill(color: .black)
+        set.fill = ColorFill(color: .gray)
         set.fillAlpha = 0.8
         set.drawFilledEnabled = true
         
