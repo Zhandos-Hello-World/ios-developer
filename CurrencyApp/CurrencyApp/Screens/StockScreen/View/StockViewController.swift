@@ -61,14 +61,17 @@ final class StockViewController: UIViewController {
 }
 extension StockViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detail = DetailModule().detailModule()
-        let nav = UINavigationController(rootViewController: detail)
-        nav.isToolbarHidden = false
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
+        let model = presenter.model(for: indexPath)
+        let detailVC = Assembly.assembler.detailVC(model: model)
+        
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 extension StockViewController: StocksViewProtocol {
+    func updateCell(for indexPath: IndexPath) {
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
+    
     func updateView() {
         tableView.reloadData()
     }

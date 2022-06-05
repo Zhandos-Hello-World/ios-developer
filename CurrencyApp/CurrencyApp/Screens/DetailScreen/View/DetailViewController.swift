@@ -12,52 +12,6 @@ import Charts
 class DetailViewController: UIViewController {
     private let presenter: DetailPresenterProtocol
     
-    private lazy var toolbar: UIToolbar = {
-        let toolbar = UIToolbar()
-        toolbar.translatesAutoresizingMaskIntoConstraints = false
-        toolbar.layer.shadowColor = UIColor.black.cgColor
-        toolbar.layer.shadowOpacity = 0.6
-        toolbar.layer.shadowOffset = .zero
-        toolbar.layer.shadowRadius = 10.0
-
-        toolbar.layer.shadowPath = UIBezierPath(rect: toolbar.bounds).cgPath
-        toolbar.layer.shouldRasterize = true
-        
-        return toolbar
-    }()
-    
-    private lazy var leaveButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "arrow.left"), for: .normal)
-        button.tintColor = .black
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    private lazy var favouriteButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "star"), for: .normal)
-        button.tintColor = .black
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "AAPL"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 18, weight: .bold)
-        return label
-    }()
-    
-    private lazy var subTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Apple Inc."
-        label.font = .systemFont(ofSize: 12, weight: .medium)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -178,6 +132,7 @@ class DetailViewController: UIViewController {
     
     
     
+    
     //MARK: init
     init(presenter: DetailPresenterProtocol) {
         self.presenter = presenter
@@ -198,19 +153,13 @@ class DetailViewController: UIViewController {
         
         setup()
     }
+    
     func setup() {
-        view.addSubview(toolbar)
-        
-        toolbar.addSubview(favouriteButton)
-        toolbar.addSubview(leaveButton)
-        toolbar.addSubview(titleLabel)
-        toolbar.addSubview(subTitleLabel)
-        toolbar.addSubview(buyButton)        
         
         view.addSubview(priceLabel)
         view.addSubview(changedLabel)
         view.addSubview(lineCharts)
-        
+        view.addSubview(buyButton)
         
         [dayButton,
          weakButton,
@@ -220,11 +169,11 @@ class DetailViewController: UIViewController {
          allButton].forEach {
             stack.addArrangedSubview($0)
         }
-        view.addSubview(stack)
         
-    
-        setupConstraints()
+        view.addSubview(stack)
         setData()
+        setupNavigation()
+        setupConstraints()
     }
     func setData() {
         var entries: [ChartDataEntry] = []
@@ -246,42 +195,72 @@ class DetailViewController: UIViewController {
         
         
         lineCharts.data = data
+        
     }
+    
+    func setupNavigation() {
+        setupFavouriteButton()
+        setupTitle()
+    }
+    
+    func setupFavouriteButton() {
+        let favouriteButton: UIButton = {
+            let button = UIButton()
+            button.setImage(UIImage(systemName: "star"), for: .normal)
+            button.setImage(UIImage(systemName: "star.fill"), for: .selected)
+            button.addTarget(self, action: #selector(favourite), for: .touchUpInside)
+            button.tintColor = .black
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
+            return button
+        }()
+        favouriteButton.isSelected = presenter.model().isFavourite
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: favouriteButton)
+        
+    }
+    @objc func favourite(sender: UIButton) {
+        sender.isSelected.toggle()
+        presenter.model().setFavourite()
+    }
+    func setupTitle() {
+        let titleLabel: UILabel = {
+            let label = UILabel()
+            label.text = presenter.model().symbol
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.font = .systemFont(ofSize: 18, weight: .bold)
+            return label
+        }()
+        navigationItem.titleView = titleLabel
+    }
+    func setupSubtitle() {
+        var subTitleLabel: UILabel = {
+            let label = UILabel()
+            label.text = "Apple Inc."
+            label.font = .systemFont(ofSize: 12, weight: .medium)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            return label
+        }()
+    }
+    
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            toolbar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            toolbar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            toolbar.topAnchor.constraint(equalTo: view.topAnchor),
-            toolbar.heightAnchor.constraint(equalToConstant: 99),
-            
-            leaveButton.leadingAnchor.constraint(equalTo: toolbar.leadingAnchor, constant: 17),
-            leaveButton.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: -23),
-            
-            favouriteButton.trailingAnchor.constraint(equalTo: toolbar.trailingAnchor, constant: -17),
-            favouriteButton.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: -23),
-            
-            titleLabel.centerXAnchor.constraint(equalTo: toolbar.centerXAnchor),
-            titleLabel.topAnchor.constraint(equalTo: toolbar.topAnchor, constant: 42),
-            
-            subTitleLabel.centerXAnchor.constraint(equalTo: toolbar.centerXAnchor),
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             
             priceLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            priceLabel.topAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: 63),
-            
-            
+            priceLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 63),
+
+
             changedLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             changedLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 8),
         
             buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             buyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             buyButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
-            
+
             stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             stack.bottomAnchor.constraint(equalTo: buyButton.topAnchor, constant: -52),
-            
+
             lineCharts.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             lineCharts.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             lineCharts.bottomAnchor.constraint(equalTo: stack.topAnchor, constant: -40),
@@ -292,13 +271,7 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: DetailViewProtocol {
     func updateView() {
-        let price = presenter.model().getValue(0)
-        let change = presenter.model().getValueChange(0)
         
-        priceLabel.text = price
-        changedLabel.text = change
-        
-        buyButton.setTitle("Buy for \(price)", for: .normal)
     }
     
     func updateView(withLoader isLoading: Bool) {

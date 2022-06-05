@@ -34,7 +34,6 @@ class FavouriteViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -44,6 +43,7 @@ class FavouriteViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         setup()
     }
+    
     func setup() {
         tableView.dataSource = self
         tableView.delegate = self
@@ -88,6 +88,11 @@ extension FavouriteViewController: UITableViewDataSource {
 }
 
 extension FavouriteViewController: FavouriteViewProtocol {
+    func updateCell(for indexPath: IndexPath) {
+        presenter.updateData()
+        tableView.reloadData()
+    }
+    
     func updateView() {
         tableView.reloadData()
     }

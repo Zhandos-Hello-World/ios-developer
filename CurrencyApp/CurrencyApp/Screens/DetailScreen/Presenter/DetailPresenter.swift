@@ -20,7 +20,7 @@ protocol DetailPresenterProtocol {
     
     func loadView(id: String, currency: String)
     
-    func model() -> DetailItem
+    func model() -> StockItemModelProtocol
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
@@ -30,8 +30,11 @@ final class DetailPresenter: DetailPresenterProtocol {
     
     private var detail: DetailItem? = nil
     
-    init(service: DetailServiceProtocol) {
+    private let stockItem: StockItemModelProtocol
+    
+    init(service: DetailServiceProtocol, stockItem: StockItemModelProtocol) {
         self.service = service
+        self.stockItem = stockItem
     }
     
     func loadView() {
@@ -51,10 +54,7 @@ final class DetailPresenter: DetailPresenterProtocol {
             }
         }
     }
-    func model() -> DetailItem {
-        guard let detail = detail else {
-            return DetailItem()
-        }
-        return detail
+    func model() -> StockItemModelProtocol {
+        return stockItem
     }
 }

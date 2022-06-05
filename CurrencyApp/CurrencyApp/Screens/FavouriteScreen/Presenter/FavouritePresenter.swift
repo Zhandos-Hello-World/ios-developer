@@ -12,6 +12,8 @@ protocol FavouriteViewProtocol: AnyObject {
     
     func updateView()
     
+    func updateCell(for indexPath: IndexPath)
+    
     func updateView(withLoader isLoading: Bool)
     
     func updateView(withError message: String)
@@ -22,6 +24,8 @@ protocol FavouritePresenterProtocol {
     var itemsCount: Int { get }
     
     func loadView()
+    
+    func updateData()
     
     func model(for indexPath: IndexPath) -> StockItemModelProtocol
 }
@@ -43,6 +47,7 @@ final class FavouritePresenter: FavouritePresenterProtocol {
 
     
     func loadView() {
+        startFavoritesNotificationObserving()
         view?.updateView(withLoader: true)
         service.getStocks { [weak self] result in
             self?.view?.updateView(withLoader: false)
@@ -56,7 +61,26 @@ final class FavouritePresenter: FavouritePresenterProtocol {
             }
         }
     }
+
+    func updateData() {
+        self.stocks = self.stocks.filter { $0.isFavourite == true}
+    }
+    
+    
+    
     func model(for indexPath: IndexPath) -> StockItemModelProtocol {
         stocks[indexPath.row]
     }
 }
+extension FavouritePresenter: FavoritesUpdateServiceProtocol {
+    func setFavorite(notification: Notification) {
+        guard let id = notification.stockId,
+              let index = stocks.firstIndex(where: { $0.id == id }) else { return }
+        
+        let indexPath = IndexPath(row: index, section: 0)
+        
+        view?.updateCell(for: indexPath)
+ 
+    }
+}
+
