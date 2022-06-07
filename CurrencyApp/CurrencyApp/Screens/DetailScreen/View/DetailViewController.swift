@@ -11,7 +11,11 @@ import Charts
 
 class DetailViewController: UIViewController {
     private let presenter: DetailPresenterProtocol
-    
+    private lazy var titleView: UIView = {
+        let view = DetailTitleView()
+        view.configure(with: TilteModel.from(stockModel: presenter.model()))
+        return view
+    }()
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +36,6 @@ class DetailViewController: UIViewController {
     }()
     
     private lazy var buyButton: UIButton = {
-        
         let button = UIButton(configuration: selectedConfig)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 16
@@ -47,7 +50,6 @@ class DetailViewController: UIViewController {
         filled.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 0, bottom: 16, trailing: 0)
         filled.baseBackgroundColor = .black
         filled.cornerStyle = .medium
-        
         return filled
     }()
     private lazy var unSelectedConfig: UIButton.Configuration = {
@@ -56,7 +58,6 @@ class DetailViewController: UIViewController {
         filled.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 0, bottom: 16, trailing: 0)
         filled.baseBackgroundColor = UIColor(red: 0.941, green: 0.955, blue: 0.97, alpha: 1)
         filled.cornerStyle = .medium
-        filled.baseForegroundColor = .black
         return filled
     }()
     
@@ -65,6 +66,7 @@ class DetailViewController: UIViewController {
         let button = UIButton(configuration: unSelectedConfig)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("D", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         return button
     }()
     
@@ -72,6 +74,7 @@ class DetailViewController: UIViewController {
         let button = UIButton(configuration: unSelectedConfig)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("W", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         return button
     }()
     
@@ -79,6 +82,7 @@ class DetailViewController: UIViewController {
         let button = UIButton(configuration: unSelectedConfig)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("M", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         return button
     }()
 
@@ -86,6 +90,7 @@ class DetailViewController: UIViewController {
         let button = UIButton(configuration: unSelectedConfig)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("6M", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         return button
     }()
     
@@ -93,13 +98,15 @@ class DetailViewController: UIViewController {
         let button = UIButton(configuration: unSelectedConfig)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Y", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         return button
     }()
     
     private lazy var allButton: UIButton = {
-        let button = UIButton(configuration: selectedConfig)
+        let button = UIButton(configuration: unSelectedConfig)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("ALL", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         return button
     }()
     
@@ -130,14 +137,13 @@ class DetailViewController: UIViewController {
         return chartView
     }()
     
-    
+
     
     
     //MARK: init
     init(presenter: DetailPresenterProtocol) {
         self.presenter = presenter
-        
-        presenter.loadView(id: "bitcoin", currency: "usd")
+        presenter.loadView(id: presenter.stockItem.id, currency: "usd", days: "30")
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -167,20 +173,19 @@ class DetailViewController: UIViewController {
         halfYearButton,
         yearButton,
          allButton].forEach {
+            $0.addTarget(self, action: #selector(action), for: .touchUpInside)
             stack.addArrangedSubview($0)
         }
         
         view.addSubview(stack)
-        setData()
         setupNavigation()
         setupConstraints()
     }
-    func setData() {
+    func setData(value: [Double]) {
         var entries: [ChartDataEntry] = []
-        for i in 0...30 {
-            entries.append(ChartDataEntry(x: Double(i), y: Double.random(in: 1...40)))
+        for i in 0..<value.count {
+            entries.append(ChartDataEntry(x: Double(i), y: value[i]))
         }
-        
         let set = LineChartDataSet(entries: entries, label: "")
         set.drawCirclesEnabled = false
         set.mode = .cubicBezier
@@ -193,10 +198,12 @@ class DetailViewController: UIViewController {
         let data = LineChartData(dataSet: set)
         data.setDrawValues(false)
         
-        
         lineCharts.data = data
-        
+        data.notifyDataChanged()
+        lineCharts.notifyDataSetChanged()
+        lineCharts.animate(xAxisDuration: 1.0)
     }
+    
     
     func setupNavigation() {
         setupFavouriteButton()
@@ -218,28 +225,40 @@ class DetailViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: favouriteButton)
         
     }
+    func turnOffAllButton() {
+//        [dayButton,
+//         weakButton,
+//         monthButton,
+//        halfYearButton,
+//        yearButton,
+//         allButton].forEach {
+//            $0.configuration = unSelectedConfig
+//            $0.setTitleColor(.black, for: .normal)
+//        }
+    }
+    
+    
+    
+    @objc func action(sender: UIButton) {
+        var days: String = ""
+        turnOffAllButton()
+        switch sender.titleLabel?.text {
+            case "D": days = "1"
+            case "W": days = "7"
+            case "M": days = "30"
+            case "6M": days = "180"
+            case "Y": days="365"
+            default: days = "500"
+        }
+        presenter.loadView(id: presenter.stockItem.id, currency: "usd", days: days)
+    }
+    
     @objc func favourite(sender: UIButton) {
         sender.isSelected.toggle()
         presenter.model().setFavourite()
     }
     func setupTitle() {
-        let titleLabel: UILabel = {
-            let label = UILabel()
-            label.text = presenter.model().symbol
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.font = .systemFont(ofSize: 18, weight: .bold)
-            return label
-        }()
-        navigationItem.titleView = titleLabel
-    }
-    func setupSubtitle() {
-        var subTitleLabel: UILabel = {
-            let label = UILabel()
-            label.text = "Apple Inc."
-            label.font = .systemFont(ofSize: 12, weight: .medium)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            return label
-        }()
+        navigationItem.titleView = titleView
     }
     
     
@@ -271,7 +290,12 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: DetailViewProtocol {
     func updateView() {
-        
+        guard let detail = presenter.getDetail() else {
+            return
+        }
+        priceLabel.text = detail.getValue()
+        changedLabel.text = detail.getValueChange()
+        setData(value: detail.getPrices())
     }
     
     func updateView(withLoader isLoading: Bool) {
@@ -279,8 +303,5 @@ extension DetailViewController: DetailViewProtocol {
     }
     
     func updateView(withError message: String) {
-        print("Not loaded")
     }
-    
-    
 }

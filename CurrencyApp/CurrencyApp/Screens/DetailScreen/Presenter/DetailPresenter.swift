@@ -15,12 +15,16 @@ protocol DetailViewProtocol: AnyObject {
 
 protocol DetailPresenterProtocol {
     var view: DetailViewProtocol? { get set }
-
+    var stockItem: StockItemModelProtocol { get }
+    
     func loadView()
     
-    func loadView(id: String, currency: String)
+    func loadView(id: String, currency: String, days: String)
     
     func model() -> StockItemModelProtocol
+    
+    
+    func getDetail() -> DetailItem?
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
@@ -30,7 +34,7 @@ final class DetailPresenter: DetailPresenterProtocol {
     
     private var detail: DetailItem? = nil
     
-    private let stockItem: StockItemModelProtocol
+    let stockItem: StockItemModelProtocol
     
     init(service: DetailServiceProtocol, stockItem: StockItemModelProtocol) {
         self.service = service
@@ -38,12 +42,11 @@ final class DetailPresenter: DetailPresenterProtocol {
     }
     
     func loadView() {
-        print("Nothing")
     }
     
-    func loadView(id: String, currency: String) {
+    func loadView(id: String, currency: String, days: String) {
         view?.updateView(withLoader: true)
-        service.getStocks(currency: currency, id: id) { [weak self] result in
+        service.getStocks(currency: currency, id: id, days: days) { [weak self] result in
             self?.view?.updateView(withLoader: false)
             switch result {
             case .success(let details):
@@ -56,5 +59,8 @@ final class DetailPresenter: DetailPresenterProtocol {
     }
     func model() -> StockItemModelProtocol {
         return stockItem
+    }
+    func getDetail() -> DetailItem? {
+        return detail
     }
 }

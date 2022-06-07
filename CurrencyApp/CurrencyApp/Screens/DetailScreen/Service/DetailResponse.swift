@@ -11,13 +11,19 @@ import Foundation
 struct DetailItem: Decodable {
     private var prices: [[Double]] = []
     
-    
-    
-    func getValue(_ row: Int) -> String {
-        formatForChange(prices[row][1])
+    func getPrices() -> [Double] {
+        var allPrices: [Double] = []
+        for i in 0..<prices.count {
+            allPrices.append(prices[i][1])
+        }
+        return allPrices
     }
-    func getValueChange(_ row: Int) -> String {
-        symbol(calculate(row)) + formatForPercentageChange(calculatePercent(row))
+    
+    func getValue() -> String {
+        formatForChange(prices[prices.count - 1][1])
+    }
+    func getValueChange() -> String {
+        symbol(calculate(prices.count - 1)) + formatForPercentageChange(calculatePercent(prices.count - 1))
     }
     
     private func formatForChange(_ number: Double) -> String {
@@ -46,11 +52,11 @@ struct DetailItem: Decodable {
     }
     
     private func calculate(_ row: Int) -> Double {
-        prices[row][1] - prices[row + 1][1]
+        prices[row][1] - prices[row - 1][1]
     }
     private func calculatePercent(_ row: Int) -> Double {
-        let max = Double.maximum(prices[row][1], prices[row + 1][1])
-        let min = Double.minimum(prices[row][1], prices[row + 1][1])
+        let max = Double.maximum(prices[row][1], prices[row - 1][1])
+        let min = Double.minimum(prices[row][1], prices[row - 1][1])
         
         return 100.0 - ((min * 100.0) / max)
     }
