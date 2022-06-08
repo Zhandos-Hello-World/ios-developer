@@ -48,7 +48,10 @@ final class ModulBuilder {
         return view
     }
     private func searchViewController() -> UIViewController {
-        SearchViewController()
+        let presenter = SearchPresenter(service: stockService())
+        let view = SearchViewController(presenter: presenter)
+        presenter.view = view
+        return view
     }
     
     
@@ -56,17 +59,21 @@ final class ModulBuilder {
         let tabbar = UITabBarController()
         let stocksVC = stocksModule()
         stocksVC.tabBarItem = UITabBarItem(title: "Stocks", image: nil, tag: 0)
+        stocksVC.tabBarItem.image = images[0]
         
         let favouriteVC = favouriteViewController()
         favouriteVC.tabBarItem = UITabBarItem(title: "Favourite", image: nil, tag: 0)
+        favouriteVC.tabBarItem.image = images[1]
         
         let searchVC = searchViewController()
         searchVC.tabBarItem = UITabBarItem(title: "Search", image: nil, tag: 0)
+        searchVC.tabBarItem.image = images[2]
         
         
         tabbar.viewControllers = [stocksVC, favouriteVC, searchVC].map {
             UINavigationController(rootViewController: $0)
         }
+        
         
         
         
